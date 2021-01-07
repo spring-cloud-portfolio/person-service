@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+
+  ### Postgre SQl ###
+  person-db:
+    ports:
+      - 5440:5432
+    image: postgres
+    env_file:
+      - person-db.env
+    networks:
+      - spring-cloud-portfolio-network
+    container_name: person-db-container
+    volumes:
+      - person-db-data:/var/lib/postgresql/data
+
+volumes:
+  person-db-data:
+    name: person-db-data
+
+networks:
+  spring-cloud-portfolio-network:
+    name: spring-cloud-portfolio-network
