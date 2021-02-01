@@ -1,7 +1,7 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.1'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 }
 
 group = 'com.doroshenko.serhey'
@@ -22,22 +22,29 @@ repositories {
 ext {
     set('springCloudVersion', "2020.0.0")
     set('testcontainersVersion', "1.15.1")
+    set("dockerImageProfile", project.findProperty("dip") ?: 'default')
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    /* Web */
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.flywaydb:flyway-core'
+    /* Cloud */
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    /* Security */
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    /* Persistence */
     runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    /* Spring tools*/
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    /* Test */
+    testImplementation 'org.testcontainers:postgresql'
+    testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.testcontainers:junit-jupiter'
-    testImplementation 'org.testcontainers:postgresql'
 }
 
 dependencyManagement {
@@ -49,4 +56,17 @@ dependencyManagement {
 
 test {
     useJUnitPlatform()
+}
+
+bootBuildImage {
+    publish = true
+    cleanCache = false
+    environment = ["BP_JVM_VERSION": "15.*"]
+    imageName = "cloudportfolio/${project.name}-${dockerImageProfile}"
+    docker {
+        publishRegistry {
+            username = findProperty('dockerHubUsername') ?: System.getenv('DOCKER_HUB_USR')
+            password = findProperty('dockerHubPassword') ?: System.getenv('DOCKER_HUB_PSW')
+        }
+    }
 }
