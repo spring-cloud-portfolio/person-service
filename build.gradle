@@ -8,6 +8,12 @@ group = 'com.doroshenko.serhey'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+bootJar {
+    manifest {
+        attributes("Implementation-Title": project.name, "Implementation-Version": project.version)
+    }
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -38,7 +44,10 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    /* Cache */
+    implementation('com.github.ben-manes.caffeine:caffeine')
     /* Spring tools*/
+//    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     /* Test */
     testImplementation 'org.testcontainers:postgresql'
