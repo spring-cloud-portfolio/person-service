@@ -1,6 +1,6 @@
 package com.doroshenko.serhey.person.domain.person;
 
-import com.doroshenko.serhey.person.domain.core.base.BaseIdentifiable;
+import com.doroshenko.serhey.person.domain.core.base.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "person")
-public class Person extends BaseIdentifiable {
+public class Person extends BaseEntity {
 
     @Column(name = "last_name")
     private String lastName;
