@@ -40,7 +40,7 @@ ext {
 
 dependencies {
     /* Custom */
-    compile 'com.doroshenko.serhey:person-api:0.0.1-SNAPSHOT'
+    implementation 'com.doroshenko.serhey:person-api:+'
     /* Web */
     implementation 'org.springframework.boot:spring-boot-starter-web'
     /* Cloud */
