@@ -1,6 +1,6 @@
 package com.doroshenko.serhey.person.domain.core.base;
 
-import com.doroshenko.serhey.person.domain.core.api.Identifiable;
+import com.doroshenko.serhey.person.dto.core.api.Identifiable;
 
 import javax.persistence.*;
 
@@ -28,6 +28,13 @@ public abstract class BaseEntity implements Identifiable {
     @Version
     @Column(name = "version", nullable = false)
     private long version;
+
+    /* Utility methods */
+
+    @Override
+    public boolean isNew() {
+        return false;
+    }
 
     /* Identifiable implementation */
     @Override

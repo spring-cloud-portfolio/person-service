@@ -1,6 +1,6 @@
 package com.doroshenko.serhey.person.repository.core;
 
-import com.doroshenko.serhey.person.domain.core.api.Identifiable;
+import com.doroshenko.serhey.person.dto.core.api.Identifiable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 

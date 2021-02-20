@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.4.2'
+    id 'org.springframework.boot' version '2.4.3'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 }
 
@@ -23,6 +23,13 @@ configurations {
 repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/milestone' }
+    maven {
+        credentials {
+            username = findProperty('gitHubUsername') ?: System.getenv('GIT_HUB_USR')
+            password = findProperty('gitHubPassword') ?: System.getenv('GIT_HUB_PSW')
+        }
+        url "https://maven.pkg.github.com/spring-cloud-portfolio/person-api"
+    }
 }
 
 ext {
@@ -32,6 +39,8 @@ ext {
 }
 
 dependencies {
+    /* Custom */
+    compile 'com.doroshenko.serhey:person-api:0.0.1-SNAPSHOT'
     /* Web */
     implementation 'org.springframework.boot:spring-boot-starter-web'
     /* Cloud */
@@ -46,7 +55,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     /* Cache */
     implementation('com.github.ben-manes.caffeine:caffeine')
-    /* Spring tools*/
+    /* Spring tools */
 //    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     /* Test */
