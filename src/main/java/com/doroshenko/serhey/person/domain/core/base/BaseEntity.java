@@ -16,11 +16,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @MappedSuperclass
 public abstract class BaseEntity implements Identifiable {
 
-    /**
-     * Determine the minimum id value
-     */
-    public static final int MIN_ID = 1;
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
@@ -30,10 +25,10 @@ public abstract class BaseEntity implements Identifiable {
     private long version;
 
     /* Utility methods */
-
     @Override
+    @Transient
     public boolean isNew() {
-        return false;
+        return id == null;
     }
 
     /* Identifiable implementation */
