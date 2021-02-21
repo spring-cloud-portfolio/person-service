@@ -12,4 +12,6 @@ public interface PersonService {
 
     PersonDto loadOne(long id);
 
+    PersonDto saveOne(PersonDto dto);
+
 }

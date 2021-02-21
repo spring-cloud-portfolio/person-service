@@ -1,5 +1,6 @@
 package com.doroshenko.serhey.person.service.person;
 
+import com.doroshenko.serhey.person.domain.person.Person;
 import com.doroshenko.serhey.person.dto.person.PersonDto;
 import com.doroshenko.serhey.person.repository.person.PersonRepository;
 import com.doroshenko.serhey.person.service.person.mapper.PersonMapper;
@@ -21,6 +22,13 @@ public class PersonServiceImpl implements PersonService {
         return personRepository.findById(id)
                 .map(personMapper::toDto)
                 .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND_EX));
+    }
+
+    @Override
+    public PersonDto saveOne(final PersonDto dto) {
+        final Person person = dto.isNew() ? personMapper.toDomain(dto)
+                : personMapper.toDomain(dto, personRepository.getOne(dto.getId()));
+        return personMapper.toDto(personRepository.save(person));
     }
 
     @Autowired
