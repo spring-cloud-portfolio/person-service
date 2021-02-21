@@ -2,10 +2,17 @@ package com.doroshenko.serhey.person.domain.security;
 
 import com.doroshenko.serhey.person.domain.core.base.BaseAuditable;
 import com.doroshenko.serhey.person.domain.person.Person;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+import static org.hibernate.annotations.FetchMode.SUBSELECT;
 
 /**
  * Database representation of internal user
@@ -17,8 +24,8 @@ import java.util.Set;
 @Table(name = "internal_user")
 public class InternalUser extends BaseAuditable {
 
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id", nullable = false)
+    @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
     private Person person;
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
@@ -26,7 +33,8 @@ public class InternalUser extends BaseAuditable {
     private String username;
     @Column(name = "password", nullable = false)
     private String password;
-    @ManyToMany
+    @Fetch(SUBSELECT)
+    @ManyToMany(fetch = LAZY)
     @JoinTable(
             name = "internal_user_to_role",
             joinColumns = {@JoinColumn(name = "user_id", nullable = false)},
@@ -41,6 +49,14 @@ public class InternalUser extends BaseAuditable {
     private boolean credentialsNonExpired = true;
 
     /* Getters and setters */
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     public String getPassword() {
         return password;
     }

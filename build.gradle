@@ -24,23 +24,28 @@ repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/milestone' }
     maven {
+        url "https://maven.pkg.github.com/spring-cloud-portfolio/person-api"
         credentials {
             username = findProperty('gitHubUsername') ?: System.getenv('GIT_HUB_USR')
             password = findProperty('gitHubPassword') ?: System.getenv('GIT_HUB_PSW')
         }
-        url "https://maven.pkg.github.com/spring-cloud-portfolio/person-api"
     }
 }
 
 ext {
     set('springCloudVersion', "2020.0.1")
     set('testcontainersVersion', "1.15.1")
+    set('mapStructVersion', '1.4.2.Final')
     set("dockerImageProfile", project.findProperty("dip") ?: 'default')
 }
 
 dependencies {
     /* Custom */
     implementation 'com.doroshenko.serhey:person-api:+'
+    /*MapStruct*/
+    implementation("org.mapstruct:mapstruct:${mapStructVersion}")
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
     /* Web */
     implementation 'org.springframework.boot:spring-boot-starter-web'
     /* Cloud */

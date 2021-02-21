@@ -17,7 +17,3 @@ spring:
         max-attempts: 10
         max-interval: 5000
       uri: http://localhost:9999
-
-  ### Banner ###
-  banner:
-    location: banner/banner-3-d.txt

@@ -2,12 +2,14 @@ package com.doroshenko.serhey.person.domain.security;
 
 import com.doroshenko.serhey.person.domain.core.base.BaseAuditable;
 import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import static javax.persistence.FetchType.LAZY;
+import static org.hibernate.annotations.FetchMode.SUBSELECT;
 
 /**
  * Database representation of user role
@@ -23,8 +25,8 @@ public class InternalUserRole extends BaseAuditable {
     private String role;
     @Column(name = "description")
     private String description;
-    @Fetch(FetchMode.SUBSELECT)
-    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(SUBSELECT)
+    @ManyToMany(fetch = LAZY)
     @JoinTable(
             name = "internal_user_role_to_authority",
             joinColumns = {@JoinColumn(name = "role_id", nullable = false)},
