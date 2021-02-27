@@ -1,4 +1,4 @@
-package com.doroshenko.serhey.person.repository.security;
+package com.doroshenko.serhey.person.repository.security.user;
 
 import com.doroshenko.serhey.person.domain.security.InternalUser;
 import com.doroshenko.serhey.person.repository.core.FilterableRepository;

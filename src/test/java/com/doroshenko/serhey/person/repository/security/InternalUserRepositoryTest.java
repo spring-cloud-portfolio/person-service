@@ -3,6 +3,7 @@ package com.doroshenko.serhey.person.repository.security;
 import com.doroshenko.serhey.person.core.annotation.NoOpSql;
 import com.doroshenko.serhey.person.domain.security.InternalUser;
 import com.doroshenko.serhey.person.repository.core.BaseDataJpaTest;
+import com.doroshenko.serhey.person.repository.security.user.InternalUserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

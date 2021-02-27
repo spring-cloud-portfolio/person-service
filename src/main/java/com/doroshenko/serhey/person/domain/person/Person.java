@@ -2,9 +2,13 @@ package com.doroshenko.serhey.person.domain.person;
 
 import com.doroshenko.serhey.person.domain.core.base.BaseEntity;
 import com.doroshenko.serhey.person.enumeration.person.Gender;
+import com.doroshenko.serhey.person.enumeration.person.PersonType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * Database representation of person
@@ -27,6 +31,14 @@ public class Person extends BaseEntity {
     private String middleName;
     @Column(name = "birth_day", nullable = false)
     private LocalDate birthDay;
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "type", length = 50, nullable = false)
+    @CollectionTable(
+            name = "person_type",
+            joinColumns = @JoinColumn(name = "person_id", nullable = false)
+    )
+    private Set<PersonType> types;
 
     /* Getters and setters */
     public Gender getGender() {
@@ -67,6 +79,12 @@ public class Person extends BaseEntity {
 
     public void setBirthDay(LocalDate birthDay) {
         this.birthDay = birthDay;
+    }
+
+    @NotNull
+    public Set<PersonType> getTypes() {
+        if (types == null) types = EnumSet.noneOf(PersonType.class);
+        return types;
     }
 
 }

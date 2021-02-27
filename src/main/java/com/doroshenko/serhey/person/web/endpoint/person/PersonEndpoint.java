@@ -1,4 +1,4 @@
-package com.doroshenko.serhey.person.web.endpoint;
+package com.doroshenko.serhey.person.web.endpoint.person;
 
 import com.doroshenko.serhey.person.dto.person.PersonDto;
 import com.doroshenko.serhey.person.service.person.PersonService;

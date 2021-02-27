@@ -3,7 +3,6 @@ package com.doroshenko.serhey.person.domain.security;
 import com.doroshenko.serhey.person.domain.core.base.BaseAuditable;
 import com.doroshenko.serhey.person.domain.person.Person;
 import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.HashSet;

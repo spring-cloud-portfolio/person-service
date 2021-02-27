@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
+/**
+ * Implementation of {@link PersonService}
+ *
+ * @author Serhey Doroshenko
+ * @see PersonService
+ */
 @Service
 public class PersonServiceImpl implements PersonService {
 
