@@ -1,14 +1,16 @@
 package com.doroshenko.serhey.person.service.security.user;
 
+import com.doroshenko.serhey.person.domain.security.InternalUser;
 import com.doroshenko.serhey.person.dto.security.user.InternalUserDto;
 import com.doroshenko.serhey.person.filter.security.user.InternalUserQueryFilter;
 import com.doroshenko.serhey.person.repository.security.user.InternalUserRepository;
-import com.doroshenko.serhey.person.repository.security.user.spec.InternalUserSpecExtractor;
+import com.doroshenko.serhey.person.repository.security.user.spec.InternalUserSpec;
+import com.doroshenko.serhey.person.service.core.base.BaseFilterableService;
 import com.doroshenko.serhey.person.service.security.user.mapper.InternalUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of {@link InternalUserService}
@@ -17,25 +19,30 @@ import org.springframework.stereotype.Service;
  * @see InternalUserService
  */
 @Service
-public class InternalUserServiceImpl implements InternalUserService {
+public class InternalUserServiceImpl extends BaseFilterableService<InternalUser> implements InternalUserService {
 
+    private final InternalUserSpec userSpec;
     private final InternalUserMapper userMapper;
     private final InternalUserRepository userRepository;
-    private final InternalUserSpecExtractor userSpecExtractor;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<InternalUserDto> loadAllByFilter(final InternalUserQueryFilter filter) {
-        final PageRequest pageRequest = PageRequest.of(filter.getPage(), filter.getSize());
-        return userRepository.findAll(userSpecExtractor.extract(filter), pageRequest).map(userMapper::toDto);
+        return loadAllByFilter(filter, userSpec.extract(filter)).map(userMapper::toDto);
+    }
+
+    @Override
+    public InternalUserRepository repository() {
+        return userRepository;
     }
 
     @Autowired
-    public InternalUserServiceImpl(final InternalUserMapper userMapper,
-                                   final InternalUserRepository userRepository,
-                                   final InternalUserSpecExtractor userSpecExtractor) {
+    public InternalUserServiceImpl(final InternalUserSpec userSpec,
+                                   final InternalUserMapper userMapper,
+                                   final InternalUserRepository userRepository) {
+        this.userSpec = userSpec;
         this.userMapper = userMapper;
         this.userRepository = userRepository;
-        this.userSpecExtractor = userSpecExtractor;
     }
 
 }

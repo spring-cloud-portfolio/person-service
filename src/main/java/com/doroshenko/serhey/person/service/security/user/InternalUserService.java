@@ -11,5 +11,7 @@ import org.springframework.data.domain.Page;
  * @author Serhey Doroshenko
  */
 public interface InternalUserService {
+
     Page<InternalUserDto> loadAllByFilter(InternalUserQueryFilter filter);
+
 }

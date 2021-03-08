@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class InternalUserSpecExtractor {
+public class InternalUserSpec {
 
     public Specification<InternalUser> extract(final InternalUserQueryFilter filter) {
         return (root, query, cb) -> {

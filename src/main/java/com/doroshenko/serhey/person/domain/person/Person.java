@@ -3,12 +3,14 @@ package com.doroshenko.serhey.person.domain.person;
 import com.doroshenko.serhey.person.domain.core.base.BaseEntity;
 import com.doroshenko.serhey.person.enumeration.person.Gender;
 import com.doroshenko.serhey.person.enumeration.person.PersonType;
+import com.vladmihalcea.hibernate.type.array.EnumArrayType;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.EnumSet;
-import java.util.Set;
+
+import static com.vladmihalcea.hibernate.type.array.internal.AbstractArrayType.SQL_ARRAY_TYPE;
 
 /**
  * Database representation of person
@@ -18,8 +20,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "person")
+@TypeDef(typeClass = EnumArrayType.class, defaultForType = PersonType[].class, parameters = {@Parameter(value = "person_type_enum", name = SQL_ARRAY_TYPE)})
 public class Person extends BaseEntity {
-
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -31,14 +33,20 @@ public class Person extends BaseEntity {
     private String middleName;
     @Column(name = "birth_day", nullable = false)
     private LocalDate birthDay;
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Column(name = "type", length = 50, nullable = false)
-    @CollectionTable(
-            name = "person_type",
-            joinColumns = @JoinColumn(name = "person_id", nullable = false)
-    )
-    private Set<PersonType> types;
+    @SuppressWarnings("JpaAttributeTypeInspection")
+    @Column(name = "person_types", columnDefinition = "person_type_enum[]")
+    private PersonType[] personTypes;
+
+    /* Util methods */
+//    public Set<PersonType> getPersonTypeSet() {
+//        if (personTypes == null) return Collections.emptySet();
+//        return Arrays.stream(personTypes).collect(Collectors.toSet());
+//    }
+//
+//    public void setPersonTypes(final Set<PersonType> personTypes) {
+//        if (personTypes == null) setPersonTypes(new PersonType[0]);
+//        else setPersonTypes(personTypes.toArray(PersonType[]::new));
+//    }
 
     /* Getters and setters */
     public Gender getGender() {
@@ -81,10 +89,12 @@ public class Person extends BaseEntity {
         this.birthDay = birthDay;
     }
 
-    @NotNull
-    public Set<PersonType> getTypes() {
-        if (types == null) types = EnumSet.noneOf(PersonType.class);
-        return types;
+    public PersonType[] getPersonTypes() {
+        return personTypes;
+    }
+
+    public void setPersonTypes(PersonType[] personTypes) {
+        this.personTypes = personTypes;
     }
 
 }

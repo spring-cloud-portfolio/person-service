@@ -1,4 +1,4 @@
-package com.doroshenko.serhey.person.repository.core;
+package com.doroshenko.serhey.person.repository.core.api;
 
 import com.doroshenko.serhey.person.dto.core.api.Identifiable;
 import org.springframework.data.jpa.repository.JpaRepository;

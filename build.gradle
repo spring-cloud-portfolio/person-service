@@ -22,7 +22,11 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
+    //noinspection GroovyAssignabilityCheck
+    maven {
+        url 'https://repo.spring.io/milestone'
+    }
+    //noinspection GroovyAssignabilityCheck
     maven {
         url "https://maven.pkg.github.com/spring-cloud-portfolio/person-api"
         credentials {
@@ -36,6 +40,8 @@ ext {
     set('springCloudVersion', "2020.0.1")
     set('testcontainersVersion', "1.15.1")
     set('mapStructVersion', '1.4.2.Final')
+    set('hibernateTypesVersion', "2.10.3")
+    set("hibernateVersion", "5.4.29.Final")
     set("dockerImageProfile", project.findProperty("dip") ?: 'default')
 }
 
@@ -58,7 +64,10 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     implementation 'org.flywaydb:flyway-core'
     annotationProcessor 'org.hibernate:hibernate-jpamodelgen'
+    implementation "org.hibernate:hibernate-core:$hibernateVersion"
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation "org.hibernate:hibernate-entitymanager:$hibernateVersion"
+    implementation "com.vladmihalcea:hibernate-types-52:${hibernateTypesVersion}"
     /* Cache */
     implementation('com.github.ben-manes.caffeine:caffeine')
     /* Spring tools */
