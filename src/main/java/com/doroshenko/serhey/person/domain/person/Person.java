@@ -22,6 +22,7 @@ import static com.vladmihalcea.hibernate.type.array.internal.AbstractArrayType.S
 @Table(name = "person")
 @TypeDef(typeClass = EnumArrayType.class, defaultForType = PersonType[].class, parameters = {@Parameter(value = "person_type_enum", name = SQL_ARRAY_TYPE)})
 public class Person extends BaseEntity {
+
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;

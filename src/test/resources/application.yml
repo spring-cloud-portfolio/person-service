@@ -10,6 +10,7 @@ spring:
       hibernate:
         format_sql: on
         highlight_sql: on
+        use_sql_comments: off
         generate_statistics: on
 
   test:
@@ -32,4 +33,4 @@ eureka:
 logging:
   level:
     org.springframework.test.context.transaction: warn
-
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
