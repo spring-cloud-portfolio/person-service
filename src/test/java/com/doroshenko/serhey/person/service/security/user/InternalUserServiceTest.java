@@ -8,16 +8,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @Sql({
-        "classpath:fixture/person/person.sql",
-        "classpath:fixture/security/internal_user.sql",
-        "classpath:fixture/security/internal_user_role.sql",
-        "classpath:fixture/security/internal_user_to_role.sql",
-        "classpath:fixture/security/internal_user_role_authority.sql",
-        "classpath:fixture/security/internal_user_role_to_authority.sql"
+        "classpath:fixture/person/person_insert.sql",
+        "classpath:fixture/security/internal_user_insert.sql",
+        "classpath:fixture/security/internal_user_role_insert.sql",
+        "classpath:fixture/security/internal_user_to_role_insert.sql",
+        "classpath:fixture/security/internal_user_role_authority_insert.sql",
+        "classpath:fixture/security/internal_user_role_to_authority_insert.sql"
+})
+@Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = {
+        "classpath:fixture/person/person_truncate.sql",
+        "classpath:fixture/security/internal_user_truncate.sql",
+        "classpath:fixture/security/internal_user_role_truncate.sql",
+        "classpath:fixture/security/internal_user_to_role_truncate.sql",
+        "classpath:fixture/security/internal_user_role_authority_truncate.sql",
+        "classpath:fixture/security/internal_user_role_to_authority_truncate.sql"
 })
 class InternalUserServiceTest extends BaseSpringBootTest {
 

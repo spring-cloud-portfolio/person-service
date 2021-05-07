@@ -24,6 +24,11 @@ spring:
         jwt:
           jwk-set-uri: http://localhost:9000/oauth2/jwks
 
+  ### Config ###
+  cloud:
+    config:
+      enabled: off
+
 ### Eureka ###
 eureka:
   client:

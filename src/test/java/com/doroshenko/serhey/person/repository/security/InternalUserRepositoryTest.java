@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
 @Sql({
-        "classpath:fixture/person/person.sql",
-        "classpath:fixture/security/internal_user.sql",
-        "classpath:fixture/security/internal_user_role.sql",
-        "classpath:fixture/security/internal_user_to_role.sql",
-        "classpath:fixture/security/internal_user_role_authority.sql",
-        "classpath:fixture/security/internal_user_role_to_authority.sql"
+        "classpath:fixture/person/person_insert.sql",
+        "classpath:fixture/security/internal_user_insert.sql",
+        "classpath:fixture/security/internal_user_role_insert.sql",
+        "classpath:fixture/security/internal_user_to_role_insert.sql",
+        "classpath:fixture/security/internal_user_role_authority_insert.sql",
+        "classpath:fixture/security/internal_user_role_to_authority_insert.sql"
 })
 class InternalUserRepositoryTest extends BaseDataJpaTest {
 

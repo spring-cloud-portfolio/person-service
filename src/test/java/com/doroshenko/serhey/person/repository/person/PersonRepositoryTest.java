@@ -3,6 +3,7 @@ package com.doroshenko.serhey.person.repository.person;
 import com.doroshenko.serhey.person.core.annotation.NoOpSql;
 import com.doroshenko.serhey.person.domain.person.Person;
 import com.doroshenko.serhey.person.enumeration.person.Gender;
+import com.doroshenko.serhey.person.enumeration.person.PersonType;
 import com.doroshenko.serhey.person.repository.core.BaseDataJpaTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,10 @@ import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.List;
 
-@Sql({"classpath:fixture/person/person.sql"})
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
+
+@Sql({"classpath:fixture/person/person_insert.sql"})
+@Sql(executionPhase = AFTER_TEST_METHOD, scripts = {"classpath:fixture/person/person_truncate.sql"})
 class PersonRepositoryTest extends BaseDataJpaTest {
 
     @PersistenceContext
@@ -84,6 +88,7 @@ class PersonRepositoryTest extends BaseDataJpaTest {
         person.setFirstName("FirstName1");
         person.setMiddleName("MiddleName1");
         person.setBirthDay(LocalDate.now());
+        person.setPersonTypes(new PersonType[]{PersonType.ATHLETE, PersonType.REFEREE});
         final Person savedPerson = personRepository.save(person);
         Assertions.assertNotNull(savedPerson);
         Assertions.assertNotNull(savedPerson.getId());

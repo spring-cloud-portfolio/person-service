@@ -1,5 +1,7 @@
 package com.doroshenko.serhey.person.repository.security.user.spec;
 
+import com.doroshenko.serhey.person.domain.person.Person;
+import com.doroshenko.serhey.person.domain.person.Person_;
 import com.doroshenko.serhey.person.domain.security.InternalUser;
 import com.doroshenko.serhey.person.domain.security.InternalUser_;
 import com.doroshenko.serhey.person.filter.security.user.InternalUserQueryFilter;
@@ -7,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;

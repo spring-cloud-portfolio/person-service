@@ -1,0 +1,1 @@
+truncate internal_user_role_authority cascade;
