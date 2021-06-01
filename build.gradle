@@ -7,13 +7,9 @@ plugins {
 group = 'com.doroshenko.serhey'
 version = '0.0.1-SNAPSHOT'
 
-bootJar {
-    manifest {
-        attributes("Implementation-Title": project.name, "Implementation-Version": project.version)
-    }
-}
-
 java { toolchain { languageVersion.set(JavaLanguageVersion.of(16)) } }
+
+bootJar { manifest { attributes("Implementation-Title": project.name, "Implementation-Version": project.version) } }
 
 ext {
     set('springCloudVersion', "2020.0.2")
@@ -25,10 +21,6 @@ ext {
     gitHubCredeintials = {
         username = project.findProperty('gitHubUsername') ?: System.getenv('GIT_HUB_USR')
         password = project.findProperty('gitHubPassword') ?: System.getenv('GIT_HUB_PSW')
-    }
-    dockerHubCredentials = {
-        username = project.findProperty('dockerHubUsername') ?: System.getenv('DOCKER_HUB_USR')
-        password = project.findProperty('dockerHubPassword') ?: System.getenv('DOCKER_HUB_PSW')
     }
 }
 
@@ -94,7 +86,12 @@ test {
 bootBuildImage {
     publish = true
     cleanCache = false
-    environment = ["BP_JVM_VERSION": "15.*"]
-    docker { publishRegistry(dockerHubCredentials) }
+    environment = ["BP_JVM_VERSION": "16.*"]
     imageName = "cloudportfolio/${project.name}-${dockerImageProfile}"
+    docker {
+        publishRegistry {
+            username = project.findProperty('dockerHubUsername') ?: System.getenv('DOCKER_HUB_USR')
+            password = project.findProperty('dockerHubPassword') ?: System.getenv('DOCKER_HUB_PSW')
+        }
+    }
 }

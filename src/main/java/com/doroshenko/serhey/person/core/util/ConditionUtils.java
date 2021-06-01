@@ -7,6 +7,11 @@ import java.util.function.Consumer;
 
 import static java.util.Objects.nonNull;
 
+/**
+ * Contains utility methods, intended to replace conditional cases in functional stile
+ *
+ * @author Serhey Doroshenko
+ */
 public final class ConditionUtils {
 
     public static <T> void doIfNonNull(final T actor, final Consumer<T> action) {

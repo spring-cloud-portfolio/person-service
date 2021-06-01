@@ -9,6 +9,10 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.vladmihalcea.hibernate.type.array.internal.AbstractArrayType.SQL_ARRAY_TYPE;
 
@@ -20,7 +24,11 @@ import static com.vladmihalcea.hibernate.type.array.internal.AbstractArrayType.S
  */
 @Entity
 @Table(name = "person")
-@TypeDef(typeClass = EnumArrayType.class, defaultForType = PersonType[].class, parameters = {@Parameter(value = "person_type_enum", name = SQL_ARRAY_TYPE)})
+@TypeDef(
+        typeClass = EnumArrayType.class,
+        defaultForType = PersonType[].class,
+        parameters = {@Parameter(value = "person_type_enum", name = SQL_ARRAY_TYPE)}
+)
 public class Person extends BaseEntity {
 
     @Column(name = "gender", nullable = false)
@@ -39,15 +47,10 @@ public class Person extends BaseEntity {
     private PersonType[] personTypes;
 
     /* Util methods */
-//    public Set<PersonType> getPersonTypeSet() {
-//        if (personTypes == null) return Collections.emptySet();
-//        return Arrays.stream(personTypes).collect(Collectors.toSet());
-//    }
-//
-//    public void setPersonTypes(final Set<PersonType> personTypes) {
-//        if (personTypes == null) setPersonTypes(new PersonType[0]);
-//        else setPersonTypes(personTypes.toArray(PersonType[]::new));
-//    }
+    public Set<PersonType> getPersonTypeSet() {
+        if (personTypes == null) return Collections.emptySet();
+        return Arrays.stream(personTypes).collect(Collectors.toSet());
+    }
 
     /* Getters and setters */
     public Gender getGender() {
@@ -94,7 +97,7 @@ public class Person extends BaseEntity {
         return personTypes;
     }
 
-    public void setPersonTypes(PersonType[] personTypes) {
+    public void setPersonTypes(final PersonType... personTypes) {
         this.personTypes = personTypes;
     }
 

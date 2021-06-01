@@ -1,5 +1,6 @@
 package com.doroshenko.serhey.person.domain.security;
 
+import com.doroshenko.serhey.person.domain.core.api.PersonAware;
 import com.doroshenko.serhey.person.domain.core.base.BaseAuditable;
 import com.doroshenko.serhey.person.domain.person.Person;
 import org.hibernate.annotations.Fetch;
@@ -21,7 +22,7 @@ import static org.hibernate.annotations.FetchMode.SUBSELECT;
  */
 @Entity
 @Table(name = "internal_user")
-public class InternalUser extends BaseAuditable {
+public class InternalUser extends BaseAuditable implements PersonAware {
 
     @JoinColumn(name = "person_id", nullable = false)
     @ManyToOne(fetch = LAZY, cascade = {MERGE, PERSIST})
@@ -48,10 +49,12 @@ public class InternalUser extends BaseAuditable {
     private boolean credentialsNonExpired = true;
 
     /* Getters and setters */
+    @Override
     public Person getPerson() {
         return person;
     }
 
+    @Override
     public void setPerson(Person person) {
         this.person = person;
     }
