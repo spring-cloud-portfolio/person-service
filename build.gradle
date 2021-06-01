@@ -7,11 +7,14 @@ plugins {
 version = '0.0.1-SNAPSHOT'
 group = 'com.doroshenko.serhey'
 
+springBoot { buildInfo() }
+
 java { toolchain { languageVersion.set(JavaLanguageVersion.of(16)) } }
 
 bootJar { manifest { attributes("Implementation-Title": project.name, "Implementation-Version": project.version) } }
 
 ext {
+    set('openApiVersion', '1.5.9')
     set('springCloudVersion', "2020.0.3")
     set('testcontainersVersion', "1.15.3")
     set('mapStructVersion', '1.4.2.Final')
@@ -23,11 +26,7 @@ ext {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
+configurations { compileOnly { extendsFrom annotationProcessor } }
 
 repositories {
     mavenCentral()
@@ -61,8 +60,12 @@ dependencies {
     implementation "com.vladmihalcea:hibernate-types-52:${hibernateTypesVersion}"
     /* Cache */
     implementation('com.github.ben-manes.caffeine:caffeine')
+    /* Documentation */
+    implementation("org.springdoc:springdoc-openapi-ui:${openApiVersion}")
+    implementation("org.springdoc:springdoc-openapi-common:${openApiVersion}")
+    implementation("org.springdoc:springdoc-openapi-security:${openApiVersion}")
     /* Spring tools */
-//    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     /* Test */
     testImplementation 'org.testcontainers:postgresql'
