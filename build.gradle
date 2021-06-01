@@ -1,22 +1,21 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.4.5'
+    id 'org.springframework.boot' version '2.5.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
-group = 'com.doroshenko.serhey'
 version = '0.0.1-SNAPSHOT'
+group = 'com.doroshenko.serhey'
 
 java { toolchain { languageVersion.set(JavaLanguageVersion.of(16)) } }
 
 bootJar { manifest { attributes("Implementation-Title": project.name, "Implementation-Version": project.version) } }
 
 ext {
-    set('springCloudVersion', "2020.0.2")
+    set('springCloudVersion', "2020.0.3")
     set('testcontainersVersion', "1.15.3")
     set('mapStructVersion', '1.4.2.Final')
-    set('hibernateTypesVersion', "2.10.4")
-    set("hibernateVersion", "5.4.29.Final")
+    set('hibernateTypesVersion', "2.11.1")
     set("dockerImageProfile", project.findProperty("dip") ?: 'default')
     gitHubCredeintials = {
         username = project.findProperty('gitHubUsername') ?: System.getenv('GIT_HUB_USR')
