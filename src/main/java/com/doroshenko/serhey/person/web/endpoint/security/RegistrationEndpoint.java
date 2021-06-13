@@ -4,10 +4,9 @@ import com.doroshenko.serhey.person.dto.security.user.InternalUserDto;
 import com.doroshenko.serhey.person.dto.security.user.registration.InternalUserRegistrationDto;
 import com.doroshenko.serhey.person.service.security.user.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Handles HTTP requests connected with user registration
@@ -16,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/registration")
-
 public class RegistrationEndpoint {
 
     private final RegistrationService registrationService;
 
     @PostMapping("/sign-up.json")
-    public InternalUserDto signUp(@RequestBody final InternalUserRegistrationDto dto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public InternalUserDto signUp(@Validated @RequestBody final InternalUserRegistrationDto dto) {
         return registrationService.signUp(dto);
     }
 

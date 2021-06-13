@@ -4,6 +4,11 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+/**
+ * Initializes latest PostgreSQL database with help of TestContainers library
+ *
+ * @author Serhey Doroshenko
+ */
 public abstract class PostgreSqlContainerInitializer {
 
     private static final String postgreSqlImage = "postgres:latest";
